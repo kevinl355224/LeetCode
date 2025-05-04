@@ -1,3 +1,5 @@
+from typing import List
+
 class Solution:
     def minDominoRotations(self, tops: List[int], bottoms: List[int]) -> int:
         for val in range(1, 7):
@@ -17,3 +19,6 @@ class Solution:
             if valid:
                 return min(top_swap, bottom_swap)        
         return -1
+
+sol = Solution()
+print(sol.minDominoRotations(tops = [2,1,2,4,2,2], bottoms = [5,2,6,2,3,2]))
