@@ -47,7 +47,7 @@ class Solution:
         print(ans)
         return ans
 
-
-test = ".L.R...LR..L.."
-sol = Solution()
-print(sol.pushDominoes(test))
+if __name__ == "__main__":
+    test = ".L.R...LR..L.."
+    sol = Solution()
+    print(sol.pushDominoes(test))

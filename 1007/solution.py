@@ -20,5 +20,6 @@ class Solution:
                 return min(top_swap, bottom_swap)        
         return -1
 
-sol = Solution()
-print(sol.minDominoRotations(tops = [2,1,2,4,2,2], bottoms = [5,2,6,2,3,2]))
+if __name__ == "__main__":
+    sol = Solution()
+    print(sol.minDominoRotations(tops = [2,1,2,4,2,2], bottoms = [5,2,6,2,3,2]))
