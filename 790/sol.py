@@ -21,7 +21,7 @@ class Solution:
 
         # Initialize
         MOD = 10**9 + 7
-        dp = [0]*(n+1)
+        dp = [0]*(n+1) # dp[0] is 0 column. So i column have n+1 array.
         dp2 = [0]*(n+1)
         print(dp)
 
