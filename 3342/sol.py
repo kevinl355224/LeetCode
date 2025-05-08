@@ -11,17 +11,17 @@ class Solution:
         # 1s 1st move, 2s sec move, 1s 3rd move .etc
         # Use a array[n*m] records the minimum time to reach.
 
-        heap = [] # [(times, step, y, x),..]
+        heap = [(0,0,0,0)] # [(times, step, y, x),..]
         n = len(moveTime)
         m = len(moveTime[0])
 
         directions = [(0,1), (0,-1), (-1,0), (1,0)] # right, left, up, down
 
-        heapq.heappush(heap, (0,0,0,0))
-
+        # Adding a function call slows down the performance by about 100ms.
         def notInBorder(y, x):
-            return not(0 <= y < n and 0 <= x < m and moveTime[ny][nx] != -1)
-
+            return not(0 <= y < n and 0 <= x < m and moveTime[y][x] != -1)
+        
+        moveTime[0][0] = -1
         while heap:
             times, step, y, x = heapq.heappop(heap)  
             # Reach end
