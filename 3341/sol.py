@@ -12,11 +12,11 @@ class Solution:
         # Use a array[n*m] records the minimum time to reach.
         n = len(moveTime)
         m = len(moveTime[0])
-        minTime = [[float('inf')]*m for _ in range(n)]
-        heap = []
+        heap = [(0,0,0)]
         directions = [(0,1), (0,-1), (1,0), (-1,0)] # Right, left, down, up
-        
-        heapq.heappush(heap, (0,0,0))
+
+        # Once find the best way to 'A' revise the moveTime to -1.
+        moveTime[0][0] = -1
         while heap:
             times, y, x = heapq.heappop(heap)
 
@@ -26,12 +26,10 @@ class Solution:
             
             for dy, dx in directions:
                 ny, nx = y + dy, x + dx
-                if 0 <= ny < n and 0 <= nx < m:
+                if 0 <= ny < n and 0 <= nx < m and moveTime[ny][nx] != -1:
                     nextTime = max(times, moveTime[ny][nx] ) + 1
-                    if nextTime < minTime[ny][nx]:
-                        minTime[ny][nx] = nextTime
-                        
-                        heapq.heappush(heap, (nextTime, ny, nx))
+                    moveTime[ny][nx] = -1
+                    heapq.heappush(heap, (nextTime, ny, nx))
 
         return -1 # Can't reach
 
