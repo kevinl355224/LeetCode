@@ -14,14 +14,13 @@ class Solution:
         heap = [] # [(times, step, y, x),..]
         n = len(moveTime)
         m = len(moveTime[0])
-        minTime = [[float('inf')]*m for _ in range(n)]
 
         directions = [(0,1), (0,-1), (-1,0), (1,0)] # right, left, up, down
 
         heapq.heappush(heap, (0,0,0,0))
 
         def notInBorder(y, x):
-            return not(0 <= ny < n and 0 <= nx < m)
+            return not(0 <= y < n and 0 <= x < m and moveTime[ny][nx] != -1)
 
         while heap:
             times, step, y, x = heapq.heappop(heap)  
@@ -36,9 +35,9 @@ class Solution:
                     continue
                 nextStep = 2 if step%2 else 1
                 nextTime = max(times, moveTime[ny][nx]) + nextStep
-                if nextTime < minTime[ny][nx]:
-                    minTime[ny][nx] = nextTime
-                    heapq.heappush(heap, (nextTime, nextStep, ny, nx))
+
+                moveTime[ny][nx] = -1
+                heapq.heappush(heap, (nextTime, nextStep, ny, nx))
 
 if __name__ == "__main__":
     sol = Solution()
