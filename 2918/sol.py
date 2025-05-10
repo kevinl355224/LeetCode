@@ -1,3 +1,5 @@
+from typing import List
+
 class Solution:
     def minSum(self, nums1: List[int], nums2: List[int]) -> int:
         # nums1 = [3,2,0,1,0]
@@ -5,21 +7,17 @@ class Solution:
         sum1, sum2 = sum(nums1), sum(nums2)
         nums1Zero = nums1.count(0)
         nums2Zero = nums2.count(0)
-        
-        if sum1 > sum2:
-            bigSum, smallSum = sum1, sum2
-            bigZero, smallZero = nums1Zero, nums2Zero
-        elif sum2 > sum1:
-            bigSum ,smallSum = sum2, sum1
-            bigZero, smallZero = nums2Zero, nums1Zero
-        else:
-            return sum1 + max(nums1Zero, nums2Zero) if (nums1Zero == 0) == (nums2Zero == 0) else -1
+        # Swap num's 0 to 1
+        swap1 = sum1 + nums1Zero
+        swap2 = sum2 + nums2Zero
 
-        diff = bigSum - smallSum
-        # Swap big number's 0 to smaller number
-        # Find the mininum of numbers sum(bigSwap) + bigSum = sum(smallSwap) + smallSum
-        # sum(swap1) = sum(swap2) - diff
-        if smallZero == 0 or diff > smallZero*10**10 - bigZero or diff < smallZero - bigZero*10**10:
+        # If swap2 is bigger than swap1, but nums1 don't have any 0 to swap to bigger number. Then fail.
+        if (nums1Zero == 0 and swap2 > swap1) or (nums2Zero == 0 and swap1 > swap2):
             return -1
+        return max(swap1, swap2)
 
-        return max(bigSum + bigZero, smallSum + smallZero)
+if __name__ == "__main__":
+    nums1 = [3,2,0,1,0]
+    nums2 = [6,5,0]
+    sol = Solution()
+    print(sol.minSum(nums1, nums2))
