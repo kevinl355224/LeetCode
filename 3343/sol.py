@@ -24,6 +24,7 @@ class Solution:
         current_sum = 0  # Running sum from digits i to 9
         current_count = 0  # Running count of digits from i to 9
         for i in range(9, -1, -1):
+            print(result_cache)
             current_sum += i * digit_count[i]
             current_count += digit_count[i]
             left_sum[i] = current_sum
@@ -44,9 +45,11 @@ class Solution:
             result = 0
             target_sum = remaining_sum
 
-            # Try distributing digit `i`: choose `x` digits for left, remaining for right
+            # Try distributing digit `i`: choose `x` digits for even, remaining for odd
             for x in range(digit_count[i] + 1):
                 y = digit_count[i] - x
+                # target_sum is not enough.
+                # Don't have enough digit to even or odd. 
                 if target_sum < 0 or remaining_count < x or y > left_count[i] - remaining_count:
                     target_sum -= i
                     continue
@@ -57,9 +60,12 @@ class Solution:
             return result
 
         # Start DFS to distribute digits such that both parts are balanced
+        # total_sum // 2, total_digits//2 is the "even" target_sum and target_digits have to reach
+        # Ex. 96421 target_sum = 11 target_digits = 2
+        # once put 2 and 9 into event position, remaining_sum = remaining_digit =0, return result_cache[i]
         return dfs(0, total_sum // 2, total_digits // 2)
 
 if __name__ == "__main__":
     sol = Solution()
-    test = "121345"
+    test = "96421"
     print(sol.countBalancedPermutations(num=test))
