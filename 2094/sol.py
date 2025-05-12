@@ -18,20 +18,21 @@ class Solution:
             if not count[a]:
                 continue
             # Second digit
-            temp_a = count[:]
-            temp_a[a] -= 1
+            count[a] -= 1
             for b in range(10):
-                if not temp_a[b]:
+                if not count[b]:
                     continue
-                temp_b = temp_a[:]
-                temp_b[b] -= 1
+                count[b] -= 1
                 # Third digit
                 for c in range(0,10,2):
-                    if not temp_b[c]:
+                    if not count[c]:
                         continue
                     # Found number
                     ans[amount] = a*100 + b*10 + c
                     amount += 1
+
+                count[b] += 1 # Recovery num of b
+            count[a] += 1 # Recovery num of a
         return ans[:amount]
 
 if __name__ == "__main__":
