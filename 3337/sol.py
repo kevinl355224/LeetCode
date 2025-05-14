@@ -4,8 +4,10 @@ from collections import Counter
 from operator import itemgetter
 from string import ascii_lowercase
 
+'''
+Use numpy will improve performance about 30%
+'''
 
-import numpy as np
 class Solution:
     def lengthAfterTransformations(self, s: str, t: int, nums: List[int]) -> int:
         # s = "abcyy"
@@ -13,7 +15,9 @@ class Solution:
         # num = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2]
 
         # Could reference 3335/betterSol.py
-        count = np.array(itemgetter(*ascii_lowercase)(Counter(s)))
+        # Basic numpy int is int64, the biggest num is about 9.2e18
+        # dtype=object could let numpy use basic python int which won't overflow
+        count = np.array(itemgetter(*ascii_lowercase)(Counter(s)), dtype=object)
         # count = [1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0]
 
         # Count matrix
@@ -28,21 +32,35 @@ class Solution:
 
         # Matrix is 2D
         # Count is 1D
-        matrix = np.array(matrix)
-        # new_count = np.dot(matrix, count)
+        matrix = np.array(matrix, dtype=object)
+
+        def vec_mult(v, A):
+            v = np.array(v, dtype=object)
+            A = np.array(A, dtype=object)
+            return [sum(v[k]*A[k][j] for k in range(26))%MOD
+                    for j in range(26)] 
+                    
         MOD = 10**9+7
-        for _ in range(t):
-            count = np.dot(matrix, count)%MOD
+        # Add Fast Exponentiation
+        def fast_pow(vector, matrix, times):
+            result = vector[:]
+            base = matrix
+            while times:
+                if times & 1: # bitwise operation
+                    result = np.dot(base, result) % MOD  
+                    # result = np.dot(result, base) % MOD 
+                base = np.dot(base, base) % MOD  
+                times >>= 1
+            return result
         
-        # print(sum(count)%(10**9+7))
-        # return sum(count)%(10**9+7)
-        return sum(count)%MOD
+        ans = fast_pow(count, matrix, t)%MOD
+        # print(ans)
+        return sum(ans)%MOD
 
 
 if __name__ == "__main__":
     sol = Solution()
     s = "abcyy"
     t = 2
-    # nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2]
     nums = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2]
     print(sol.lengthAfterTransformations(s=s, t=t, nums=nums))
