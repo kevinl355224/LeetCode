@@ -1,3 +1,7 @@
+from collections import deque, Counter
+from operator import itemgetter
+from string import ascii_lowercase
+
 class Solution:
     def lengthAfterTransformations(self, s: str, t: int) -> int:
         # s = "jajsda"
