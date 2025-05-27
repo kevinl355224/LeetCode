@@ -23,7 +23,7 @@ class Solution:
             
         Because return interger so /2 -> //2
         """
-        return n*(n+1)//2 - 2*m*(n//m)*(n//m+1)//2
+        return n*(n+1)//2 - m*(n//m)*(n//m+1)
 
 
 if __name__ == "__main__":
