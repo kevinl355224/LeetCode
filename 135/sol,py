@@ -1,0 +1,31 @@
+from math import comb
+from typing import List
+
+class Solution:
+    def candy(self, ratings: List[int]) -> int:
+        """
+        Each child must have at least one candy.
+        Return the minimum number of candies you need to have to distribute the candies to the children.
+        """
+        n = len(ratings)
+        
+        # Each child have at least one candy.
+        candies = [1] * n
+
+        # Scan from left to rignt. Make sure num of candies is more than child on the left side
+
+        for i in range(1, n):
+            if ratings[i] > ratings[i - 1]:
+                candies[i] = candies[i - 1] + 1
+
+        # Scan from right to left. make sure num of candies is more than child on the right side
+        for i in range(n - 2 , -1, -1):
+            if ratings[i] > ratings[i + 1]:
+                candies[i] = max(candies[i], candies[i + 1] + 1)
+
+        return sum(candies)
+        
+if __name__ == "__main__":
+    sol = Solution()
+    ratings = [1,0,2]
+    print(sol.candy(ratings))
