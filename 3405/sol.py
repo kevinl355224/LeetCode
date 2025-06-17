@@ -54,9 +54,7 @@ class Solution:
         If n = 7, k = 3
         [*, *, *, *, *, *, *]
         There has (n-1) gap in array.
-        And k number is equal to the left. Meaning k gaps left is equal right.(same_gap)
-        Than there has (n - 1 - k) gaps which left num is differnet from the left.(diff_gap)
-        So we have to choose (n - 1 - k) diff_gap in n numbers
+        And k number is equal to the left. Meaning k gaps left is equal right.
         """
         ways_to_choose_k_pairs =  comb(n - 1, k)
 
