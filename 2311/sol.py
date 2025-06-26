@@ -9,7 +9,7 @@ class Solution:
         base = 1
         cnt = 0
         for digit in s[::-1]:
-            if total + base =< k:
+            if total + base <= k:
                 if int(digit):
                     total += base
                 base *= 2
