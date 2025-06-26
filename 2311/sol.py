@@ -6,18 +6,19 @@ class Solution:
         1 <= k <= 10**9
         """
         total = 0
-        base = 1
-        cnt = 0
+        zeros = s.count("0")
+        ones = 0
+        power = 1
+
         for digit in s[::-1]:
-            if total + base <= k:
-                if int(digit):
-                    total += base
-                base *= 2
-                cnt += 1
+            if total + power <= k:
+                if digit == "1":
+                    total += power
+                    ones += 1
+                power <<= 1
             else:
-                if digit == "0":
-                    cnt += 1     
-        return cnt
+                break
+        return zeros + ones
 
 if __name__ == "__main__":
     sol = Solution()
