@@ -1,4 +1,4 @@
-from collections import deque
+from collections import deque, Counter
 
 class Solution:
     def longestSubsequenceRepeatedK(self, s: str, k: int) -> str:
@@ -8,7 +8,9 @@ class Solution:
         2 <= s.length, k <= 2000
         """
         if k == 1: return s
-        alphabet = [chr(97 + i) for i in range(26)]
+        cnt = Counter(s)
+        # Only use the letter which reapeted >= k times
+        alphabet = [ch for ch in sorted(cnt, reverse=True) if cnt[ch] >= k]
         q = deque() # ["xe", "cd"]
         q.append("")
         longest_sub = ""
@@ -30,13 +32,13 @@ class Solution:
             sub_s = q.popleft()
             for letter in alphabet:
                 new_s = sub_s + letter
-                repeat = get_repeated_times(new_s)
-                if repeat >= k:
+                if len(new_s) * k > len(s):
+                    continue
+
+                if get_repeated_times(new_s) >= k:
                     q.append(new_s)
                     if len(new_s) > len(longest_sub) or (len(new_s) == len(longest_sub) and new_s > longest_sub):
                         longest_sub = new_s
-                else:
-                    pass
 
         return longest_sub
 
