@@ -12,14 +12,12 @@ class Solution:
         """
         max_length = 0
 
-        cnt_dict = Counter(nums)
+        cnt = Counter(nums)
 
-        ordered_tuple = [(num, cnt) for num, cnt in cnt_dict.items()]
-        ordered_tuple.sort(key=lambda x: x[0])
         # print(ordered_tuple)
-        for i in range(1, len(ordered_tuple)):
-            if ordered_tuple[i][0] - ordered_tuple[i-1][0] == 1:
-                max_length = max(max_length, ordered_tuple[i][1] + ordered_tuple[i-1][1])
+        for num in cnt:
+            if num + 1 in cnt:
+                max_length = max(max_length, cnt[num] + cnt[num + 1])
 
         return max_length
 
