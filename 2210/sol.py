@@ -6,16 +6,6 @@ class Solution:
         Return the number of hills and valleys in nums.
         """
         ans = 0
-        # if nums[1] > nums[0]:
-        #     uphill = 1
-        # elif nums[1] <  nums[0]:
-        #     uphill = 0
-        # else:
-        #     uphill = None
-
-        # for r in nums[2]
-
-        # for i in range(2, len(nums) - 1):
         l = nums[0]
         m = nums[1]
         for r in nums[2:]:
@@ -25,7 +15,6 @@ class Solution:
                 ans += 1
             l = m
             m = r
-
 
         return ans
     
