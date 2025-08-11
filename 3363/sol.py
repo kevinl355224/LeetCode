@@ -28,7 +28,7 @@ class Solution:
         
         bottom_path = [fruits[0][size - 1], 0, 0]
         window = 2
-
+        mid = size // 2
         # Use DP 
         for i in range(1, size - 1):
             new_right = [0] * (window + 2)
@@ -45,13 +45,9 @@ class Solution:
             bottom_path = new_bottom
 
             # the max window size is at mid of the size
-            mid = size // 2  # 中間點
-
             if i < mid:
-                # 前半段，window 漸增
                 window += 1
-            else:
-                # 後半段，window 漸減
+            elif i > mid:
                 window -= 1
         
         return total + bottom_path[0] + right_path[0]
