@@ -6,6 +6,7 @@ class Solution:
         Given an m x n binary matrix mat
         return the number of submatrices that have all ones.
         """
+        # With Monotonic Stack
         rows, cols = len(mat), len(mat[0])
         ans = 0
         height = [0] * cols
@@ -16,16 +17,22 @@ class Solution:
 
             stack = []
             count = [0] * cols
-            for i in range(cols):
-                while stack and height[stack[-1]] >= height[i]:
+            for c in range(cols):
+                # If previous height is highter than current. Pop it.
+                while stack and height[stack[-1]] >= height[c]:
                     stack.pop()
+                
+                # Current height is higher than before.
                 if stack:
+                    # prev_index is the height which is lower than current.
                     prev_index = stack[-1]
-                    count[i] = count[prev_index] + height[i] * (i - prev_index)
+                    # count = the total count when prev_index + the height of current * (current - prev_idx)
+                    count[c] = count[prev_index] + height[c] * (c - prev_index)
+                # Current height is lower than before.
                 else:
-                    count[i] = height[i] * (i + 1)
-                stack.append(i)
-                ans += count[i]
+                    count[c] = height[c] * (c + 1)
+                stack.append(c)
+                ans += count[c]
 
         return ans
 
@@ -33,5 +40,5 @@ class Solution:
 
 if __name__ == "__main__":
     sol = Solution()
-    mat = [[1,0,1],[1,1,0],[1,1,0]]
+    mat = [[0,1,1,0],[0,1,1,1],[1,1,1,0]]
     print(sol.numSubmat(mat))
